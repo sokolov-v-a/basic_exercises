@@ -12,8 +12,16 @@ students = [
     {'first_name': 'Маша'},
     {'first_name': 'Петя'},
 ]
-# ???
 
+students_names = {}
+for student in students:
+    name = student['first_name']
+    if name in students_names:
+       students_names[name] += 1
+    else:
+        students_names[name] = 1  
+for name in students_names:
+    print(f"{name}: {students_names[name]}")
 
 # Задание 2
 # Дан список учеников, нужно вывести самое часто повторящееся имя
@@ -26,8 +34,16 @@ students = [
     {'first_name': 'Маша'},
     {'first_name': 'Оля'},
 ]
-# ???
+students_names = {}
+for student in students:
+    name = student['first_name']
+    if name in students_names:
+       students_names[name] += 1
+    else:
+        students_names[name] = 1  
+students_names_sorted = sorted(students_names.items(), key=lambda x: x[1], reverse=True)
 
+print(f"Самое частое имя среди учеников: {students_names_sorted[0][0]}")
 
 # Задание 3
 # Есть список учеников в нескольких классах, нужно вывести самое частое имя в каждом классе.
@@ -51,7 +67,21 @@ school_students = [
         {'first_name': 'Саша'},
     ],
 ]
-# ???
+
+
+class_number = 0
+for students in school_students:
+    class_number += 1
+    students_names = {}
+    for student in students:
+        name = student['first_name']
+        if name in students_names:
+            students_names[name] += 1
+        else:
+            students_names[name] = 1  
+    students_names_sorted = sorted(students_names.items(), key=lambda x: x[1], reverse=True)
+
+    print(f"Самое частое имя в классе {class_number}: {students_names_sorted[0][0]}")
 
 
 # Задание 4
@@ -72,7 +102,15 @@ is_male = {
     'Миша': True,
     'Даша': False,
 }
-# ???
+for school_calass in school:
+    male = {"девочки": 0, "мальчики": 0}
+    for student in school_calass['students']:
+        name = student['first_name']
+        if is_male[name] == True:
+            male['мальчики'] += 1
+        elif is_male[name] == False:
+            male['девочки'] += 1
+    print(f"Класс {school_calass['class']}: девочки {male['девочки']}, мальчики {male['мальчики']} ")
 
 
 # Задание 5
@@ -91,5 +129,27 @@ is_male = {
     'Олег': True,
     'Миша': True,
 }
-# ???
 
+girls = {}
+boys = {}
+
+for school_calass in school:
+    print(school_calass)
+    for student in school_calass['students']:
+        name = student['first_name']
+        class_name = school_calass['class']
+        if is_male[name] == True:
+            if class_name in boys:
+                boys[class_name]+= 1
+            else:
+                boys[class_name] = 1
+        elif is_male[name] == False:
+            if class_name in girls:
+                girls[class_name]+= 1
+            else:
+                girls[class_name] = 1
+sorted_girls = sorted(girls.items(), key= lambda x: x[1], reverse=True)
+sorted_boys  = sorted(boys.items(),  key= lambda x: x[1], reverse=True)
+
+print(f"Больше всего мальчиков в классе {sorted_boys[0][0]}: {sorted_boys[0][1]}")
+print(f"Больше всего девочек в классе {sorted_girls[0][0]}: {sorted_girls[0][1]}")
